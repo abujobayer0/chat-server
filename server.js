@@ -11,18 +11,20 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: {
-    origin: 'https://chat-app-mauve-beta.vercel.app',
-    methods: ['GET', 'POST'],
-  },
-});
+    cors: {
+      origin: process.env.CLIENT_URI, 
+      methods: ['GET', 'POST'],
+    },
+  });
+  
+  app.use(
+    cors({
+      origin: process.env.CLIENT_URI,
+      methods: ['GET', 'POST'],
+    })
+  );
 
-app.use(
-  cors({
-    origin: 'https://chat-app-mauve-beta.vercel.app',
-    methods: ['GET', 'POST'],
-  })
-);
+
 app.use(express.json());
 app.use(morgan('dev'));
 
